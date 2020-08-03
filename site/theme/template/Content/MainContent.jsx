@@ -220,7 +220,8 @@ class MainContent extends Component {
     // eslint-disable-next-line global-require
     const scrollama = require('scrollama');
     this.scroller = scrollama();
-    this.scroller
+    setTimeout(() => {
+      this.scroller
       .setup({
         step: '.markdown > h2, .code-box', // required
         offset: 0,
@@ -228,6 +229,10 @@ class MainContent extends Component {
       .onStepEnter(({ element }) => {
         updateActiveToc(element.id);
       });
+      if (location.hash && document.querySelector(location.hash)) {
+        updateActiveToc(location.hash.replace('#', ''));
+      }
+    });
   }
 
   generateMenuItem(isTop, item, { before = null, after = null }) {
